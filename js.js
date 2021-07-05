@@ -3,8 +3,20 @@ const app = express()
 const jsonParser = express.json()
 const cors = require('cors')
 const passwordHash = require('password-hash');
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
+
+let mongo = require('./mongo')
+let connectToMongoDb = async () => {
+	await mongo().then(MongoClient => {
+		try{
+			console.log('Connected to mongoDB!')
+		} finally{
+			console.log("ok")
+		}
+	})
+}
+connectToMongoDb()
 
 function hash(text){
 	return text.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)
