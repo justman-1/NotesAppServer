@@ -32,8 +32,6 @@ const userScheme = new Schema({
     notes: Array
 });
   
-mongoose.connect("mongodb://localhost:27017/", { useUnifiedTopology: true, useNewUrlParser: true });
-  
 const User = mongoose.model("User", userScheme);
 
 app.get('/signup', jsonParser, (req, res)=>{
