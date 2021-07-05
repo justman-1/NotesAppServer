@@ -34,6 +34,10 @@ const userScheme = new Schema({
   
 const User = mongoose.model("User", userScheme);
 
+app.get('/', (req, res)=>{
+	res.send('Hello!')
+})
+
 app.get('/signup', jsonParser, (req, res)=>{
 	let data = req.query
 	User.findOne({login: data.login}, (err, docs)=>{
