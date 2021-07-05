@@ -37,7 +37,7 @@ const userScheme = new Schema({
 const User = mongoose.model("User", userScheme);
 
 app.get('/', (req, res)=>{
-	res.send('Hello!')
+	res.sendFile(__dirname + '/index.html')
 })
 
 app.get('/signup', jsonParser, (req, res)=>{
