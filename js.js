@@ -6,7 +6,7 @@ const passwordHash = require('password-hash');
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-const PORT = process.env.PORT || 3000
+let PORT = process.env.PORT || 80
 
 let mongo = require('./mongo')
 let connectToMongoDb = async () => {
