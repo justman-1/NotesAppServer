@@ -6,6 +6,8 @@ const passwordHash = require('password-hash');
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
+const PORT = process.env.PORT || 3000
+
 let mongo = require('./mongo')
 let connectToMongoDb = async () => {
 	await mongo().then(MongoClient => {
@@ -22,7 +24,7 @@ function hash(text){
 	return text.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)
 }
 
-const server = require('http').createServer(app).listen(8000)
+const server = require('http').createServer(app).listen(PORT)
 
 app.use(cors())
   
