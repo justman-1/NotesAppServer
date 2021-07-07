@@ -45,13 +45,13 @@ app.get('/signup', jsonParser, (req, res)=>{
 	User.findOne({login: data.login}, (err, docs)=>{
 		if(docs == undefined){
 			if(data.login.length < 4 || data.login.length > 20){
-		        res.status(404).send('The login must contain from 4 to 20 letters')
+		        res.status(499).send('The login must contain from 4 to 20 letters')
 	        }
 	        else if(data.password1 != data.password2){
-		        res.status(404).send("Passwords don't match")
+		        res.status(499).send("Passwords don't match")
 	        }
 	        else if(data.password1.length < 4 || data.password1.length > 20){
-		        res.status(404).send('The password must contain from 4 to 20 letters')
+		        res.status(499).send('The password must contain from 4 to 20 letters')
 	        }
 	        else{
 		        let user = {login: data.login, password: hash(data.password1), notes: []}
@@ -61,7 +61,7 @@ app.get('/signup', jsonParser, (req, res)=>{
 	        }
 		}
 		else{
-			res.status(404).send("The login is occupied")
+			res.status(499).send("The login is occupied")
 		}
 	})
 })
@@ -76,11 +76,11 @@ app.get('/signin', jsonParser, (req, res)=>{
 				res.status(200).send(docs)
 			}
 			else{
-				res.status(404).send('The password is wrong')
+				res.status(499).send('The password is wrong')
 			}
 		}
 		else{
-			res.status(404).send("There are not users with this login")
+			res.status(499).send("There are not users with this login")
 		}
 	})
 })
@@ -92,6 +92,25 @@ app.get('/getUserNotes', jsonParser, (req, res)=>{
 		if(docs != undefined){
 			if(docs.password == data.password){
 				res.status(200).send(docs.notes)
+			}
+			else{
+				res.status(499).send('The password is wrong')
+			}
+		}
+		else{
+			res.status(499).send('There are not users with this login')
+		}
+	})
+})
+
+app.get('/uploadNotes', (req, res)=>{
+	let data = req.query
+	User.findOne({login: data.user.login}, (err, docs)=>{
+		if(docs != undefined){
+			if(docs.password == data.user.password){
+				User.updateOne({login: data.user.login}, {notes: data.notes}, (err2)=>{
+					res.status(200).send('ok')
+				})
 			}
 			else{
 				res.status(499).send('The password is wrong')
