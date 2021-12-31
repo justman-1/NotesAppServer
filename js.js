@@ -26,7 +26,9 @@ function hash(text){
 
 const server = require('http').createServer(app).listen(PORT)
 
-app.use(cors())
+app.use(cors({
+	origin: '*'
+}))
   
 const userScheme = new Schema({
     login: String,
